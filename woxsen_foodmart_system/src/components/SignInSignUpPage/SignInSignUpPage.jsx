@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./SignInSignUp.css";
+<script src="https://smtpjs.com/v3/smtp.js"></script>
 
 const SignInSignUpPage = ({ onLoginSuccess }) => {
   const [showSignUp, setShowSignUp] = useState(false);
@@ -38,18 +39,36 @@ const SignInSignUpPage = ({ onLoginSuccess }) => {
       setError("Only woxsen.edu.in emails are supported.");
       return;
     }
+  
+    // Generate a random 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000);
+  
     try {
       const response = await axios.post("http://localhost:5000/api/signup", {
         name,
         email,
         password,
+        otp, // Add the OTP to the request payload to be sent to the server
       });
       console.log(response.data); // This should print the response from the server
-      setShowSignUp(false); // Switch back to the Sign In form after successful sign up
+  
+      // Send the OTP over email using SMTPJS
+      window.Email.send({
+        SecureToken : "5f7c5a7c-ce56-4069-885a-9c24f7acbe1c",
+        To: email, // Recipient's email address (the entered email)
+        From: "rizwanzhad@gmail.com", // Your email address
+        Subject: "Verification OTP for Woxen Food Management System", // Email subject
+        Body: `Your verification code is: ${otp}`, // Email body containing the OTP
+      }).then(
+        message => alert(message)
+      );
+  
+      // setShowSignUp(false); // Switch back to the Sign In form after successful sign up
     } catch (error) {
       setError(error.response.data.message);
     }
   };
+  
 
   return (
     <div className="body">
