@@ -1,0 +1,13 @@
+{
+    "breakfast" : "Dosa",
+    "lunch" : {
+        "rice_varieties" : "Curd Rice",
+        "Veg varieties" : "moong dal",
+        "nonVeg-varieties" : "chicken curry"
+    },
+    "dinner" : {
+        "rice_varieties" : "Curd Rice",
+        "Veg varieties" : "moong dal",
+        "nonVeg-varieties" : "chicken curry"
+    }
+}
